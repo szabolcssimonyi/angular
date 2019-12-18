@@ -1,0 +1,6 @@
+<p-dialog [(visible)]="isDialogVisible" [modal]="isModal" [closable]="false">
+    <p-header>
+        <app-header *ngIf="isCloseVisible" [title]="title" [isSearchVisible]="isSearchVisible" (close)="closeDialog($event)"></app-header>
+    </p-header>
+    <ng-content></ng-content>
+</p-dialog>

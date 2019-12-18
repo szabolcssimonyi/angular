@@ -1,0 +1,135 @@
+body {
+    app-dashboard {
+
+        .layout-container,
+        .layout-main,
+        .layout-wrapper {
+            min-height: 100vh;
+
+            .ui-widget-header:not(.ui-dataview-header) .ui-inputtext {
+                background-image: none;
+            }
+        }
+
+        .layout-content.loading {
+            .ui-card {
+                .ui-card-body {
+                    display: flex;
+                    height: 100%;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+            }
+        }
+
+        .layout-content {
+            min-height    : calc(100vh - 117px);
+            display       : flex;
+            flex-direction: column;
+
+            .ui-card {
+                flex: 1;
+
+            }
+
+
+            .profile-image {
+                border-radius: 50%;
+                border       : 1px solid #DDD;
+                width        : 42px;
+                height       : 42px;
+            }
+
+
+            app-group-list,
+            app-job-list,
+            app-role-list,
+            app-user-list {
+
+                .job-container {
+                    table {
+                        border-collapse : separate;
+                        background-color: transparent;
+                    }
+
+                    .ui-treetable,
+                    .ui-table {
+                        tr {
+                            background-color: transparent;
+                        }
+
+                        tr:hover {
+                            background-color: transparent;
+                        }
+
+                        .ui-treetable-tbody>tr:not(.ui-state-highlight):not(.ui-contextmenu-selected):hover {
+                            background-color: transparent;
+                            color           : white;
+                        }
+                    }
+
+                }
+
+            }
+        }
+
+        p-card {
+            display: flex;
+            flex   : 1;
+        }
+
+        .footer {
+            align-self: flex-end;
+            padding   : 6px 0 0 0;
+        }
+
+        app-user {
+            .profile-image {
+                border-radius: 50%;
+                border       : 1px solid #DDD;
+                width        : 120px;
+                height       : 120px;
+            }
+        }
+    }
+
+    .layout-container {
+        .topbar {
+            .logo {
+                width     : 160px;
+                background: none;
+            }
+        }
+
+        app-footer {
+            .footer {
+                padding: 0.5em 0;
+            }
+        }
+
+        .profile {
+            .profile-image {
+                border-radius: 50%;
+                border       : 1px solid #DDD;
+                width        : 80px;
+                height       : 80px;
+            }
+        }
+
+        app-profile-edit {
+            .profile-image {
+                border-radius: 50%;
+                border       : 1px solid #DDD;
+                width        : 120px;
+                height       : 120px;
+            }
+
+            .avatar-container {
+                text-align: center;
+            }
+        }
+
+    }
+
+}

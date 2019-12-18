@@ -1,0 +1,105 @@
+<div *ngIf="searchData.length>0" class="search-container">
+    <div class="p-grid p-justify-between">
+        <h4>{{ 'USER.SEARCH.TITLE' | translate }}</h4>
+        <div class="p-col-fixed" style="width:50px">
+            <button pButton type="button" icon="ui-icon-clear" (click)="clearSearch()"
+                class="ui-button flat ui-button-secondary"></button>
+        </div>
+    </div>
+    <div class="ui-g">
+        <div class="ui-g-12 ui-md-4" *ngFor="let item of searchData">
+            <p-checkbox name="search" [value]="item" [label]="item.label" [(ngModel)]="selectedSearchData"
+                (onChange)="searchChanged()">
+            </p-checkbox>
+        </div>
+    </div>
+</div>
+<div class="content-container-inner">
+    <p-table [columns]="columns" [value]="list.items" [paginator]="true" [(rows)]="list._meta.perPage" autoLayout="true"
+        [paginatorPosition]="'bottom'" [rowsPerPageOptions]="[3,10,20,30]" [(selection)]="selectedUsers" #userTable
+        (onLazyLoad)="load($event)" [lazy]="true" [totalRecords]="list._meta.totalCount">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th style="width: 2.25em">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th *ngFor="let col of columns" [pSortableColumn]="col.field"
+                    [class.user-detail-small]="isUserDetailSmall(col)"
+                    [class.user-detail-medium]="isUserDetailMedium(col)">
+                    {{col.header}}
+                    <p-sortIcon [field]="col.field" *ngIf="col.field!=='avatar'"></p-sortIcon>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+            <tr [pSelectableRow]="rowData['is_deleted']===0 ? rowData : null" [pSelectableRowIndex]="rowIndex"
+                [style.opacity]="rowData['is_deleted']===0 ? 1 : 0.4" class="user-table">
+                <td>
+                    <p-tableCheckbox [value]="rowData" *ngIf="rowData['is_deleted']===0"></p-tableCheckbox>
+                </td>
+                <td>
+                    <img [src]="rowData['avatar']" class='profile-image' />
+                </td>
+                <td *ngIf="rowData['is_deleted']===0">
+                    {{ rowData['username'] | shortenText: 20 }}
+                </td>
+                <td *ngIf="rowData['is_deleted']===1">
+                    N/A
+                </td>
+                <td class="user-detail-small">
+                    {{ rowData['firstname'] | shortenText: 20 }}
+                </td>
+                <td class="user-detail-small">
+                    {{ rowData['lastname'] | shortenText: 20 }}
+                </td>
+                <td class="user-detail-small">
+                    <i
+                        [ngClass]="{'ui-icon-person':rowData['active']===1, 'ui-icon-person-outline' : rowData['active']!==1}"></i>
+                </td>
+                <td *ngIf="rowData['is_deleted']===0">
+                    {{ rowData['role'] | shortenText: 20 }}
+                </td>
+                <td *ngIf="rowData['is_deleted']===1">
+                    N/A
+                </td>
+                <td *ngIf="rowData['is_deleted']===0" class="user-detail-medium">
+                    {{ rowData['job'].name | shortenText: 20 }}
+                </td>
+                <td *ngIf="rowData['is_deleted']===1" class="user-detail-medium">
+                    N/A
+                </td>
+                <td *ngIf="rowData['is_deleted']===0" class="user-detail-medium">
+                    {{ rowData['group'].name | shortenText: 20 }}
+                </td>
+                <td *ngIf="rowData['is_deleted']===1" class="user-detail-medium">
+                    N/A
+                </td>
+                <td *ngIf="rowData['is_deleted']===0" class="user-detail-medium">
+                    {{ rowData['email']| shortenText: 20 }}
+                </td>
+                <td *ngIf="rowData['is_deleted']===1" class="user-detail-medium">
+                    N/A
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft" let-state>
+            <div class="control-button-container">
+                <button pButton type="button" icon="ui-icon-add" class="test-icon-button"
+                    (click)="showAddDialog()"></button>
+                <button pButton type="button" icon="ui-icon-edit" class="test-icon-button"
+                    (click)="showEditDialog()" [disabled]="selectedUsers.length !== 1"></button>
+                <button pButton type="button" icon="ui-icon-delete" class="test-icon-button"
+                    [disabled]="selectedUsers.length === 0" (click)="delete()"></button>
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+<app-dialog [(isDialogVisible)]="dialogVisible" [isModal]="true" [title]="dialog.title" (close)="close()">
+    <app-user #dialog (cancel)="close()" (edit)="edit($event)" (create)="add($event)"></app-user>
+</app-dialog>
+<app-dialog [(isDialogVisible)]="searchDialogVisible" [isModal]="true" [title]="searchDialog.title"
+    (close)="closeSearchDialog()">
+    <app-user-search #searchDialog (cancel)="closeSearchDialog()" (search)="search($event)"></app-user-search>
+</app-dialog>
+<p-confirmDialog header="{{ 'GLOBAL.CONFIRM_DELETE' | translate }}" icon="pi pi-exclamation-triangle">
+</p-confirmDialog>

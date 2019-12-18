@@ -1,0 +1,32 @@
+<form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+    <div class="ui-g ui-fluid form-group">
+        <div class="ui-g-12 main-content">
+            <span class="md-inputfield">
+                <input type="text" pInputText formControlName="name">
+                <label>{{ 'ROLE.ROLE_NAME' | translate }}</label>
+                <div *ngIf="form.get('name').invalid && (form.get('name').dirty || form.get('name').touched)"
+                    class="ui-message ui-messages-error ui-corner-all">
+                    <div *ngIf="form.get('name').errors.required">
+                        {{ 'ROLE.ERRORS.ROLENAME_REQUIRED' | translate }}
+                    </div>
+                    <div *ngIf="form.get('name').errors.minlength || form.get('name').errors.maxlength">
+                        {{ 'ROLE.ERRORS.ROLENAME_LENGTH' | translate }}
+                    </div>
+                </div>
+            </span>
+        </div>
+        <div class="ui-g-12 secondary-content">
+            <p-scrollPanel [style]="{width: '100%', height: '250px'}">
+                <p-tree [value]="tree" [style]="{border: 'none'}" selectionMode="checkbox"
+                    [(selection)]="selectedPermissions" propagateSelectionUp="true" #permissionTree>
+                </p-tree>
+            </p-scrollPanel>
+        </div>
+    </div>
+    <div class="ui-g-12 secondary-content">
+        <div class="ui-g-12 ui-md-3 ui-md-offset-9">
+            <button pButton type="submit" label="{{ 'GLOBAL.SAVE' | translate }}" class="purple-btn"
+                [disabled]="!isFormValid"></button>
+        </div>
+    </div>
+</form>

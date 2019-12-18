@@ -1,0 +1,46 @@
+<form [formGroup]="form" (ngSubmit)="onSearch()" novalidate>
+    <div class="ui-g ui-fluid form-group main-content">
+        <div class="ui-g-12">
+            <span class="md-inputfield">
+                <input type="text" pInputText formControlName="username">
+                <label>{{ 'USER.SEARCH.USER_NAME' | translate }}</label>
+            </span>
+        </div>
+        <div class="ui-g-12">
+            <span class="md-inputfield">
+                <input type="text" pInputText formControlName="name">
+                <label>{{ 'USER.SEARCH.NAME' | translate }}</label>
+            </span>
+        </div>
+        <div class="ui-g-12">
+            <span class="md-inputfield">
+                <input type="text" pInputText formControlName="email">
+                <label>{{ 'USER.SEARCH.EMAIL' | translate }}</label>
+            </span>
+        </div>
+        <div class="ui-g-12  ui-md-6 ui-sm-12">
+            <span class="md-inputfield">
+                <p-dropdown [options]="groups" formControlName="group_id" appendTo="body">
+                </p-dropdown>
+            </span>
+        </div>
+        <div class="ui-g-12  ui-md-6 ui-sm-12">
+            <span class="md-inputfield">
+                <p-dropdown [options]="jobs" formControlName="job_id" appendTo="body">
+                </p-dropdown>
+            </span>
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-sm-12">
+            <span class="md-inputfield">
+                <p-dropdown [options]="roles" formControlName="role_name" appendTo="body">
+                </p-dropdown>
+            </span>
+        </div>
+        <div class="ui-g-12">
+            <div class="ui-g-12 ui-md-2 ui-md-offset-10">
+                <button pButton type="submit" label="{{ 'GLOBAL.SAVE' | translate }}" class="purple-btn"
+                    [disabled]="!isUserFormValid"></button>
+            </div>
+        </div>
+    </div>
+</form>

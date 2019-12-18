@@ -1,0 +1,108 @@
+<form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+    <div class="ui-g ui-fluid form-group">
+        <div class="ui-g-12 ui-md-6 main-content">
+            <span class="md-inputfield">
+                <input type="text" pInputText formControlName="name">
+                <label>{{ 'GROUPS.NAME' | translate }}</label>
+                <div *ngIf="form.get('name').invalid && (form.get('name').dirty || form.get('name').touched)"
+                    class="ui-message ui-messages-error ui-corner-all">
+                    <div *ngIf="form.get('name').errors.required">
+                        {{ 'GROUPS.ERRORS.NAME_REQUIRED' | translate }}
+                    </div>
+                    <div *ngIf="form.get('name').errors.minlength || form.get('name').errors.maxlength">
+                        {{ 'GROUPS.ERRORS.NAME_LENGTH' | translate }}
+                    </div>
+                </div>
+            </span>
+        </div>
+        <div class="ui-g-12 ui-md-6 main-content">
+            <span class="md-inputfield">
+                <input type="text" pInputText formControlName="short_name">
+                <label>{{ 'GROUPS.SHORT_NAME' | translate }}</label>
+                <div *ngIf="form.get('short_name').invalid && (form.get('short_name').dirty || form.get('short_name').touched)"
+                    class="ui-message ui-messages-error ui-corner-all">
+                    <div *ngIf="form.get('short_name').errors.required">
+                        {{ 'GROUPS.ERRORS.SHORT_NAME_REQUIRED' | translate }}
+                    </div>
+                    <div *ngIf="form.get('short_name').errors.minlength || form.get('short_name').errors.maxlength">
+                        {{ 'GROUPS.ERRORS.SHORT_NAME_LENGTH' | translate }}
+                    </div>
+                </div>
+            </span>
+        </div>
+        <div class="ui-g-12 ui-md-12 secondary-content" formArrayName="jobs" *ngIf="type===1">
+            <h4>{{ 'JOB.LIST.TITLE' | translate}}</h4>
+            <p-table [columns]="columns" [value]="getJobControls()" autoLayout="true" [(selection)]="selectedJob">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th style="width: 3em"></th>
+                        <th *ngFor="let col of columns">
+                            {{ col.header }}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                    <tr [pSelectableRow]="rowData" [formGroupName]="rowIndex">
+                        <td>
+                            <p-tableRadioButton [value]="rowData"></p-tableRadioButton>
+                        </td>
+                        <td>
+                            <span class="md-inputfield">
+                                <p-dropdown [options]="jobs" (onChange)="jobChanged($event)" formControlName="job_id"
+                                    appendTo="body">
+                                </p-dropdown>
+                                <div *ngIf="formJob(rowIndex, 'job_id').invalid && (formJob(rowIndex, 'job_id').dirty || formJob(rowIndex, 'job_id').touched)"
+                                    class="ui-message ui-messages-error ui-corner-all">
+                                    <div *ngIf="formJob(rowIndex, 'job_id').errors.notselected">
+                                        {{ 'GROUPS.ERRORS.JOBS_REQUIRED' | translate }}
+                                    </div>
+                                </div>
+                            </span>
+                        </td>
+                        <td>
+                            <span class="md-inputfield">
+                                <p-dropdown [options]="roles" formControlName="assigned_role" appendTo="body">
+                                </p-dropdown>
+                                <div *ngIf="formJob(rowIndex, 'assigned_role').invalid && (formJob(rowIndex, 'assigned_role').dirty || formJob(rowIndex, 'assigned_role').touched)"
+                                    class="ui-message ui-messages-error ui-corner-all">
+                                    <div *ngIf="formJob(rowIndex, 'assigned_role').errors.notselected">
+                                        {{ 'JOB.ERRORS.ROLE_REQUIRED' | translate }}
+                                    </div>
+                                </div>
+                            </span>
+                        </td>
+                        <td>
+                            <span class="md-inputfield">
+                                <p-spinner type="text" pInputText formControlName="min_user_assign_role">
+                                </p-spinner>
+                                <div *ngIf="formJob(rowIndex, 'min_user_assign_role').invalid && (formJob(rowIndex, 'min_user_assign_role').dirty || formJob(rowIndex, 'min_user_assign_role').touched)"
+                                    class="ui-message ui-messages-error ui-corner-all">
+                                    <div *ngIf="formJob(rowIndex, 'min_user_assign_role').errors.required">
+                                        {{ 'JOB.ERRORS.USER_COUNT_REQUIRED' | translate }}
+                                    </div>
+                                    <div *ngIf="formJob(rowIndex, 'min_user_assign_role').errors.min">
+                                        {{ 'JOB.ERRORS.USER_COUNT_TOO_LOW' | translate }}
+                                    </div>
+                                </div>
+                            </span>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="control-button-container">
+                        <button pButton type="button" icon="ui-icon-add" class="test-icon-button"
+                            (click)="createJob()" [disabled]="!jobSelectable()"></button>
+                        <button pButton type="button" icon="ui-icon-delete" [disabled]="!selectedJob || areJobsFull()"
+                            class="test-icon-button" (click)="deleteJob()"></button>
+                    </div>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+    <div class="ui-g-12 secondary-content control-container">
+        <div class="ui-g-12 ui-md-2 ui-md-offset-10" class="button-container">
+            <button pButton type="submit" label="{{ 'GLOBAL.SAVE' | translate }}" class="purple-btn"
+                [disabled]="!isFormValid"></button>
+        </div>
+    </div>
+</form>

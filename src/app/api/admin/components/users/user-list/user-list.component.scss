@@ -1,0 +1,26 @@
+@media (max-width: 650px) {
+    .user-detail-small {
+        display: none;
+    }
+}
+
+@media (max-width: 1250px) {
+    .user-detail-medium {
+        display: none;
+    }
+}
+
+.ui-table {
+
+    td.ng-star-inserted,
+    td.ng-start-inserted {
+        width: 50px;
+    }
+    th,
+    td,
+    th:first-child,
+    th:last-child {
+        padding-bottom  : 3px;
+        padding-top     : 3px;
+    }
+}

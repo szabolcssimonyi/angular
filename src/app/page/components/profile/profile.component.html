@@ -1,0 +1,24 @@
+<div class="profile" [ngClass]="{'profile-expanded':active}">
+    <a href="#" (click)="onClick($event)">
+        <img class="profile-image" [src]="avatar" />
+        <span class="profile-name" *ngIf="isLoggedIn">{{ userName }}</span>
+        <span class="profile-name">({{ role }})</span>
+        <i class="material-icons">keyboard_arrow_down</i>
+    </a>
+</div>
+
+<ul class="ultima-menu profile-menu" [@menu]="active ? 'visible' : 'hidden'">
+    <li role="menuitem" *ngIf="isLoggedIn">
+        <a href="#" class="ripplelink" [attr.tabindex]="!active ? '-1' : null" [routerLink]="['/profile']">
+            <i class="material-icons">person</i>
+            <span>Profile</span>
+        </a>
+    </li>
+    <li role="menuitem">
+        <a href="#" class="ripplelink" [attr.tabindex]="!active ? '-1' : null"
+            (click)="isLoggedIn ? logout($event) : login($event)">
+            <i class="material-icons">power_settings_new</i>
+            <span>{{ loginTitle }}</span>
+        </a>
+    </li>
+</ul>

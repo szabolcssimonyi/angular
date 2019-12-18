@@ -1,0 +1,40 @@
+<form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+    <div class="ui-g ui-fluid form-group">
+        <div class="ui-g-12 ui-md-6 main-content">
+            <span class="md-inputfield">
+                <input type="text" pInputText formControlName="name">
+                <label>{{ 'JOB.NAME' | translate }}</label>
+                <div *ngIf="form.get('name').invalid && (form.get('name').dirty || form.get('name').touched)"
+                    class="ui-message ui-messages-error ui-corner-all">
+                    <div *ngIf="form.get('name').errors.required">
+                        {{ 'JOB.ERRORS.NAME_REQUIRED' | translate }}
+                    </div>
+                    <div *ngIf="form.get('name').errors.minlength || form.get('name').errors.maxlength">
+                        {{ 'JOB.ERRORS.NAME_LENGTH' | translate }}
+                    </div>
+                </div>
+            </span>
+        </div>
+        <div class="ui-g-12 ui-md-6 main-content">
+            <span class="md-inputfield">
+                <input type="text" pInputText formControlName="short_name">
+                <label>{{ 'JOB.SHORT_NAME' | translate }}</label>
+                <div *ngIf="form.get('short_name').invalid && (form.get('short_name').dirty || form.get('short_name').touched)"
+                    class="ui-message ui-messages-error ui-corner-all">
+                    <div *ngIf="form.get('short_name').errors.required">
+                        {{ 'JOB.ERRORS.SHORT_NAME_REQUIRED' | translate }}
+                    </div>
+                    <div *ngIf="form.get('short_name').errors.minlength || form.get('short_name').errors.maxlength">
+                        {{ 'JOB.ERRORS.SHORT_NAME_LENGTH' | translate }}
+                    </div>
+                </div>
+            </span>
+        </div>
+    </div>
+    <div class="ui-g-12 secondary-content">
+        <div class="ui-g-12 ui-md-3 ui-md-offset-9">
+            <button pButton type="submit" label="{{ 'GLOBAL.SAVE' | translate }}" class="purple-btn"
+                [disabled]="!isFormValide"></button>
+        </div>
+    </div>
+</form>

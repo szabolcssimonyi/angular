@@ -1,0 +1,58 @@
+.material-icons {
+    cursor: pointer;
+}
+
+.topbar {
+    .topbar-right {
+        #rightpanel-menu-button {
+            margin     : 4px;
+            margin-left: 4px;
+        }
+
+        .topbar-items {
+
+            @media (min-width: 1024px) {
+                font-size  : 1.1em;
+                display    : flex;
+                align-items: center;
+
+                li {
+                    margin-left: 2em;
+
+                    a {
+                        color: white;
+                    }
+                }
+
+                .profile-item {
+                    a.avatar-container {
+                        display    : flex;
+                        align-items: center;
+
+                        .profile-image {
+                            border-radius: 50%;
+                            width        : 42px;
+                            height       : 42px;
+                        }
+
+                        .profile-name {
+                            margin-right: 6px;
+                        }
+                    }
+
+                    .ultima-menu {
+                        li {
+                            margin-left: 2em;
+
+                            a {
+                                color: #666;
+                            }
+                        }
+                    }
+                }
+            }
+
+
+        }
+    }
+}

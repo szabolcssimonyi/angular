@@ -1,0 +1,18 @@
+<div class="header">
+    <div class="header-container">
+        <span>{{ title }}</span>
+        <div class="header-right-side">
+            <div #search class="search-item" *ngIf="isSearchVisible">
+                <span class="md-inputfield">
+                    <input type="text" pInputText>
+                    <label>Search</label>
+                    <i class="topbar-icon material-icons search-button">search</i>
+                    <i class="material-icons advanced-search-button" (click)="showAdvancedSearch()">more_vert</i>
+                </span>
+            </div>
+            <p-button *ngIf="isCloseVisible" type="button" icon="ui-icon-close" class="test-dialog-icon-button"
+                (click)="close.emit($event)">
+            </p-button>
+        </div>
+    </div>
+</div>

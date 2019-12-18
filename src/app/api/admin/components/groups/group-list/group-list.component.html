@@ -1,0 +1,66 @@
+<div class="content-container-inner">
+    <p-treeTable [value]="groups" [(selection)]="selectedGroup" autoLayout="true" selectionMode="single"
+        dataKey="row_id" (onNodeExpand)="onNodeExpand($event)">
+        <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+            <tr [ttSelectableRow]="rowNode">
+                <td>
+                    <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                    {{rowData.name}}
+                </td>
+                <td style="width: 5%">
+                    {{rowData.user_count}}
+                </td>
+                <td colspan="3" class="job-container" *ngIf="type===1">
+                    <p-treeTable [value]="rowData.jobs" autoLayout="true">
+                        <ng-template pTemplate="body" let-jobNode let-jobData="rowData">
+            <tr>
+                <td>
+                    <p-treeTableToggler [rowNode]="jobNode"></p-treeTableToggler>
+                    <ng-container *ngIf="!jobData.disabled">
+                        {{jobData.name }}
+                    </ng-container>
+                    <ng-container *ngIf="jobData.disabled">
+                        {{ 'GROUPS.JOB_TITLE' | translate }}
+                    </ng-container>
+                </td>
+                <td>
+                    <ng-container *ngIf="!jobData.disabled">
+                        {{jobData.assigned_role}}
+                    </ng-container>
+                    <ng-container *ngIf="jobData.disabled">
+                        {{'GROUPS.ROLE_TITLE' | translate }}
+                    </ng-container>
+                </td>
+                <td>
+                    <ng-container *ngIf="!jobData.disabled">
+                        {{jobData.min_user_assign_role}}
+                    </ng-container>
+                    <ng-container *ngIf="jobData.disabled">
+                        {{ 'GROUPS.LIMIT_TITLE' | translate }}
+                    </ng-container>
+                </td>
+            </tr>
+        </ng-template>
+    </p-treeTable>
+    </td>
+    </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+        <div class="control-button-container">
+            <button pButton type="button" icon="ui-icon-add" class="test-icon-button with-text"
+                (click)="showCreateRoot()" label="{{ newButtonTitle | translate}}"></button>
+            <button pButton type="button" icon="ui-icon-add" [disabled]="!selectedGroup" class="test-icon-button"
+                (click)="showAddDialog()"></button>
+            <button pButton type="button" icon="ui-icon-edit" [disabled]="!selectedGroup" class="test-icon-button"
+                (click)="showEditDialog()"></button>
+            <button pButton type="button" icon="ui-icon-delete" [disabled]="!selectedGroup"
+                class="test-icon-button" (click)="delete()"></button>
+        </div>
+    </ng-template>
+    </p-treeTable>
+</div>
+<app-dialog [(isDialogVisible)]="dialogVisible" [isModal]="true" [title]="dialog.title" (close)="closeDialog()">
+    <app-groups #dialog (cancel)="closeDialog()" (edit)="editGroups($event)" (create)="addGroups($event)"></app-groups>
+</app-dialog>
+<p-confirmDialog header="{{ 'GLOBAL.CONFIRM_DELETE' | translate }}" icon="pi pi-exclamation-triangle">
+</p-confirmDialog>

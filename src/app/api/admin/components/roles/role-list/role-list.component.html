@@ -1,0 +1,38 @@
+<div class="content-container-inner">
+    <div class="ui-g ui-fluid form-group">
+        <div class="ui-g-12 ui-lg-12">
+            <p-table [columns]="columns" [value]="list.items" autoLayout="true" [(selection)]="selected"
+                selectionMode="single">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns">
+                            {{ col.header }}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                    <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                        <td *ngFor="let col of columns">
+                            {{ rowData[col.field]}}
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="control-button-container">
+                        <button pButton type="button" icon="ui-icon-add" class="test-icon-button"
+                            (click)="showAddDialog()"></button>
+                        <button pButton type="button" icon="ui-icon-edit" [disabled]="!selected"
+                            class="test-icon-button" (click)="showEditDialog()"></button>
+                        <button pButton type="button" icon="ui-icon-delete" class="test-icon-button"
+                            [disabled]="'true'" (click)="delete()"></button>
+                    </div>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+<app-dialog [(isDialogVisible)]="dialogVisible" [isModal]="true" [title]="dialog.title" (close)="closeDialog()">
+    <app-role #dialog (cancel)="closeDialog()" (edit)="edit($event)" (create)="add($event)"></app-role>
+</app-dialog>
+<p-confirmDialog header="{{ 'ROLE.LIST.CONFIRM_DELETE' | translate }}" icon="pi pi-exclamation-triangle">
+</p-confirmDialog>

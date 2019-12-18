@@ -1,0 +1,40 @@
+<div class="layout-wrapper" [ngClass]="{'layout-compact':layoutCompact}" (click)="onLayoutClick()">
+
+    <div #layoutContainer class="layout-container" [ngClass]="{'menu-layout-static': !isOverlay(),
+            'menu-layout-overlay': isOverlay(),
+            'layout-menu-overlay-active': overlayMenuActive,
+            'menu-layout-horizontal': isHorizontal(),
+            'menu-layout-slim': isSlim(),
+            'layout-menu-static-inactive': staticMenuDesktopInactive,
+            'layout-menu-static-active': staticMenuMobileActive}">
+
+        <app-topbar></app-topbar>
+
+        <div class="layout-menu" [ngClass]="{'layout-menu-dark':darkMenu}" (click)="onMenuClick($event)">
+            <p-scrollPanel #scrollPanel [style]="{height: '100%'}">
+                <app-profile *ngIf="profileMode=='inline'&&!isHorizontal()"></app-profile>
+                <app-menu [reset]="resetMenu"></app-menu>
+            </p-scrollPanel>
+        </div>
+        <div class="layout-main">
+            <!-- <app-breadcrumb></app-breadcrumb> -->
+            <div class="layout-content" [class.loading]="pageService.isLoading">
+                <p-card [class.loading]="pageService.isLoading">
+                    <app-header [title]="headerText" [isSearchVisible]="true" [isCloseVisible]='false'
+                        [style.display]="pageService.isLoading ? 'none':'block'">
+                    </app-header>
+                    <p-progressSpinner [style.display]="pageService.isLoading ? 'block':'none'"></p-progressSpinner>
+                    <div [style.display]="pageService.isLoading ? 'none':'block'" class="content-container">
+                        <router-outlet></router-outlet>
+                    </div>
+                    <p-footer>
+                    </p-footer>
+                </p-card>
+                <app-footer></app-footer>
+            </div>
+        </div>
+        <app-rightpanel></app-rightpanel>
+        <div class="layout-mask"></div>
+    </div>
+
+</div>

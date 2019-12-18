@@ -1,0 +1,166 @@
+<form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+    <div class="ui-g ui-fluid form-group">
+        <div class="ui-g-12 main-content">
+            <div class="profile-inner">
+                <h3>{{ 'USER.PROFILE_EDIT' | translate }}</h3>
+                <div class="ui-g-12 ui-md-5 ui-lg-3">
+                    <div class="p-grid p-justify-center">
+                        <div class="p-col-fixed" style="width:200px;">
+                            <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
+                                *ngIf="imageChangedEvent" [aspectRatio]="4 / 3" [resizeToWidth]="128" format="png"
+                                (imageCropped)="imageCropped($event)" outputType='both'>
+                            </image-cropper>
+                        </div>
+                        <div  class="p-col-fixed avatar-container" style="width:200px;" *ngIf="!imageChangedEvent">
+                            <img class="profile-image" src="{{ avatarObject }}" />
+                        </div>
+                        <div  class="p-col-fixed avatar-container" style="width:200px;" >
+                            <p-fileUpload accept="image/*" (onSelect)="addAvatar($event)" mode='basic' #avatarUploader
+                                chooseLabel="{{ 'USER.AVATAR_ADD' | translate }}"></p-fileUpload>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-md-7 ui-lg-9">
+                    <div class="ui-g-12 ui-md-6">
+                        <span class="md-inputfield">
+                            <input type="text" pInputText formControlName="username">
+                            <label>{{ 'USER.USER_NAME' | translate }}</label>
+                            <div *ngIf="form.get('username').invalid && (form.get('username').dirty || form.get('username').touched)"
+                                class="ui-message ui-messages-error ui-corner-all">
+                                <div *ngIf="form.get('username').errors.required">
+                                    {{ 'USER.ERRORS.USERNAME_REQUIRED' | translate }}
+                                </div>
+                                <div
+                                    *ngIf="form.get('username').errors.minlength || form.get('username').errors.maxlength">
+                                    {{ 'USER.ERRORS.USERNAME_LENGTH' | translate }}
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+                    <div class="ui-g-12 ui-md-6">
+                        <span class="md-inputfield">
+                            <p-dropdown [options]="genders" formControlName="gender_id" appendTo="body">
+                            </p-dropdown>
+                            <div *ngIf="form.get('gender_id').invalid && (form.get('gender_id').dirty || form.get('gender_id').touched)"
+                                class="ui-message ui-messages-error ui-corner-all">
+                                <div *ngIf="form.get('gender_id').errors.notselected">
+                                    {{ 'USER.ERRORS.GENDER_REQUIRED' | translate }}
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+                    <div class="ui-g-12 ui-md-6">
+                        <span class="md-inputfield">
+                            <input type="text" pInputText formControlName="firstname">
+                            <label>{{ 'USER.FIRST_NAME' | translate }}</label>
+                            <div *ngIf="form.get('firstname').invalid && (form.get('firstname').dirty || form.get('firstname').touched)"
+                                class="ui-message ui-messages-error ui-corner-all">
+                                <div *ngIf="form.get('firstname').errors.required">
+                                    {{ 'USER.ERRORS.USERNAME_REQUIRED' | translate }}
+                                </div>
+                                <div
+                                    *ngIf="form.get('firstname').errors.minlength || form.get('firstname').errors.maxlength">
+                                    {{ 'USER.ERRORS.USERNAME_LENGTH' | translate }}
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+                    <div class="ui-g-12 ui-md-6">
+                        <span class="md-inputfield">
+                            <input type="text" pInputText formControlName="lastname">
+                            <label>{{ 'USER.LAST_NAME' | translate }}</label>
+                            <div *ngIf="form.get('lastname').invalid && (form.get('lastname').dirty || form.get('lastname').touched)"
+                                class="ui-message ui-messages-error ui-corner-all">
+                                <div *ngIf="form.get('lastname').errors.required">
+                                    {{ 'USER.ERRORS.USERNAME_REQUIRED' | translate }}
+                                </div>
+                                <div
+                                    *ngIf="form.get('lastname').errors.minlength || form.get('lastname').errors.maxlength">
+                                    {{ 'USER.ERRORS.USERNAME_LENGTH' | translate }}
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+                    <div class="ui-g-12 ui-md-6">
+                        <span class="md-inputfield">
+                            <input type="text" pInputText formControlName="email">
+                            <label>{{ 'USER.EMAIL' | translate }}</label>
+                        </span>
+                    </div>
+                    <div class="ui-g-12 ui-md-6">
+                        <span class="md-inputfield">
+                            <input type="text" pInputText formControlName="tel">
+                            <label>{{ 'USER.PHONE' | translate }}</label>
+                            <div *ngIf="form.get('tel').invalid && (form.get('tel').dirty || form.get('tel').touched)"
+                                class="ui-message ui-messages-error ui-corner-all">
+                                <div *ngIf="form.get('tel').errors.minlength || form.get('tel').errors.maxlength">
+                                    {{ 'USER.ERRORS.PHONE_LENGTH' | translate }}
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui-g-12 ui-md-12 secondary-content">
+            <div class="profile-inner">
+                <h3>{{ 'USER.GROUPS_DATA_TITLE' | translate }}</h3>
+                <div class="ui-g-12  ui-md-6 ui-sm-12">
+                    <span class="md-inputfield">
+                        <p-dropdown [options]="groups" formControlName="group" appendTo="body">
+                        </p-dropdown>
+                    </span>
+                </div>
+                <div class="ui-g-12  ui-md-6 ui-sm-12">
+                    <span class="md-inputfield">
+                        <input type="text" pInputText formControlName="external_id">
+                        <label>{{ 'USER.GROUPS_NUMBER' | translate }}</label>
+                    </span>
+                </div>
+                <div class="ui-g-12  ui-md-6 ui-sm-12">
+                    <span class="md-inputfield">
+                        <p-dropdown [options]="jobs" formControlName="job" appendTo="body">
+                        </p-dropdown>
+                    </span>
+                </div>
+                <div class="ui-g-12  ui-md-6 ui-sm-12">
+                    <span class="md-inputfield">
+                        <input type="text" pInputText formControlName="work_started_date">
+                        <label>{{ 'USER.FIRSTWORK_DATE' | translate }}</label>
+                    </span>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-sm-12">
+                    <span class="md-inputfield">
+                        <p-dropdown [options]="roles" formControlName="role" appendTo="body">
+                        </p-dropdown>
+                    </span>
+                </div>
+                <div class="ui-g-12 ui-md-6 ui-sm-12">
+                    <span class="md-inputfield">
+                        <p-dropdown [options]="states" formControlName="active" appendTo="body">
+                        </p-dropdown>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui-g-12 secondary-content">
+        <div class="profile-inner">
+            <div class="ui-g-12 ui-md-3">
+                <button pButton type="button" label="{{ 'USER.RESET_PASSWORD' | translate }}"
+                    class="ui-button-secondary flat" (click)="onResetPassword()"
+                    [disabled]="form.get('email').invalid && (form.get('email').dirty || form.get('email').touched)"></button>
+            </div>
+            <div class="ui-g-12 ui-md-1 ui-md-offset-7 control-container">
+                <button pButton type="button" label="{{ 'GLOBAL.CLOSE' | translate }}" class="ui-button-secondary"
+                    href="#" [routerLink]="['/']"></button>
+            </div>
+            <div class="ui-g-12 ui-md-1 control-container">
+                <button pButton type="submit" label="{{ 'GLOBAL.SAVE' | translate }}" class="purple-btn"
+                    [disabled]="!isUserFormValid"></button>
+            </div>
+        </div>
+    </div>
+</form>
+<p-confirmDialog header="{{ 'GLOBAL.CONFIRM_RESET' | translate }}" icon="pi pi-exclamation-triangle">
+</p-confirmDialog>

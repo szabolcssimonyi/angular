@@ -1,0 +1,39 @@
+<div class="login-body">
+    <div class="card login-panel">
+        <form (ngSubmit)="onSubmit()" #form="ngForm">
+            <div class="ui-g ui-fluid">
+                <div class="ui-g-12 logo-container">
+                    <img class="logo" src="./assets/layout/images/dashboard/logo-test.png ">
+                    <div class="logo-image"></div>
+                </div>
+                <div class="ui-g-12">
+                    <span class="md-inputfield">
+                        <input type="text" pInputText [(ngModel)]="email" name="emailInput" required email
+                            #emailInput="ngModel">
+                        <label>{{ 'LOGIN.EMAIL' | translate }}</label>
+                    </span>
+                    <span *ngIf="!emailInput.valid && emailInput.touched">{{ 'LOGIN.MISSING_EMAIL' | translate }}</span>
+                </div>
+                <div class="ui-g-12">
+                    <span class="md-inputfield">
+                        <input type="password" pPassword [(ngModel)]="password" name="passwordInput" required
+                            #passwordInput="ngModel" feedback="false">
+                        <label>{{ 'LOGIN.PASSWORD' | translate }}</label>
+                    </span>
+                    <span
+                        *ngIf="!passwordInput.valid && passwordInput.touched">{{ 'LOGIN.MISSING_PASSWORD' | translate }}</span>
+                </div>
+                <div class="ui-g-12 control-container">
+                    <button pButton type="submit" label="{{ 'LOGIN.LOGINBTN' | translate }}" class="ui-button-success"
+                        [disabled]="!form.valid"></button>
+                    <a (click)="showDialog();">{{ 'LOGIN.FORGOT_PASSWORDBTN' | translate }}</a>
+                    <!-- <a [routerLink]="['/']" >{{ 'LOGIN.BACK' | translate}}</a> -->
+                </div>
+            </div>
+        </form>
+    </div>
+    <app-dialog [(isDialogVisible)]="dialogVisible" [isModal]="true" [title]="'LOGIN.RESET_PASSWORD' | translate"
+        (close)="closeDialog()">
+        <app-request-password-reset #dialog (cancel)="closeDialog()"></app-request-password-reset>
+    </app-dialog>
+</div>

@@ -1,0 +1,26 @@
+<div class="layout-breadcrumb">
+    <ul>
+        <li>
+            <a routerLink="">
+                <i class="material-icons">home</i>
+            </a>
+        </li>
+        <li>/</li>
+        <ng-template ngFor let-item let-last="last" [ngForOf]="items">
+            <li>
+                <a [routerLink]="item.routerLink" *ngIf="item.routerLink">{{item.label}}</a>
+                <ng-container *ngIf="!item.routerLink">{{item.label}}</ng-container>
+            </li>
+            <li *ngIf="!last">/</li>
+        </ng-template>
+    </ul>
+
+    <div class="layout-breadcrumb-options">
+        <a  title="{{ 'BREADCRUMB.LOGIN' | translate }}" *ngIf="!isLoggedIn" (click)="login($event)">
+            <i class="material-icons">power_settings_new</i>
+        </a>
+        <a  title="{{ 'BREADCRUMB.LOGOUT' | translate }}" *ngIf="isLoggedIn" (click)="logout($event)">
+            <i class="material-icons">power_settings_new</i>
+        </a>
+    </div>
+</div>
