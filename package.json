@@ -27,7 +27,7 @@
     "@ngx-translate/http-loader": "^4.0.0",
     "chart.js": "^2.8.0",
     "compressorjs": "^1.0.5",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "ngx-image-cropper": "^2.0.2",
     "primeflex": "^1.0.0-rc.1",
     "primeicons": "^2.0.0",
